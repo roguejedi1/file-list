@@ -4,6 +4,9 @@ import './index.css';
 import PropTypes from "prop-types"
 import { propTypes } from 'react-bootstrap/esm/Image';
 import Time from "./Time"
+import FileIcon from "./FileIcon"
+import FileName from "./FileName"
+import CommitMessage from "./CommitMessage"
 
 const FileList = ({ files }) => (
   <table className="file-list">
@@ -21,59 +24,17 @@ FileList.propTypes = {
 
 const FileListItem = ({file}) => (
   <tr className="file-list-item" key={file.id}>
-    <td><FileIcon file={file} /></td>
-    <td><FileName file={file}/></td>
-    <td><CommitMessage commit={file.latestCommit}/></td>
-    <td className="age">
+    <span><FileIcon file={file} /></span>
+    <span><FileName file={file}/></span>
+    <span><CommitMessage commit={file.latestCommit}/></span>
+    <span className="age">
       <Time time={file.updated_at}/>
-    </td>
+    </span>
   </tr>
 )
 
 FileListItem.propTypes = {
   file: PropTypes.object.isRequired
-}
-
-function FileIcon({file}){
-  let icon = 'fa-file-text-o'
-
-  if(file.type === 'folder'){
-    icon = 'fa-folder'
-  }
-
-  return (
-    <td className="file-icon">
-      <i className={`fa ${icon}`}/>
-    </td>
-  )
-}
-
-FileIcon.propTypes = {
-  icon: PropTypes.object.isRequired
-}
-
-function FileName({file}){
-  return (
-    <>
-      <td className="file-name">{file.name}</td>
-    </>
-  )
-}
-
-FileName.propTypes = {
-  file: PropTypes.object.isRequired
-}
-
-const CommitMessage = ({commit}) => {
-  return (
-    <td className="commit-message">
-      {commit.message}
-    </td>
-  )
-}
-
-CommitMessage.propTypes = {
-  commit: PropTypes.object.isRequired
 }
 
 const testFiles = [
